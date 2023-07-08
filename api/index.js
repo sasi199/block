@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-mongoose.connect('mongodb+srv://sasi2109:f4wA7IB3kNAiW9Nh@cluster0.pekyxlp.mongodb.net/?retryWrites=true&w=majority');
+
 
 app.post('/register', async (req,res) => {
   const {username,password} = req.body;
@@ -134,7 +135,19 @@ app.get('/post/:id', async (req, res) => {
   res.json(postDoc);
 })
 
-app.listen(4000, 'localhost', () => {
-  console.log('Server is running on localhost:4000');
+app.use("/", (req, res) => {
+  
+  res.send("Hello, World!");
 });
+mongoose.connect('mongodb+srv://sasi2109:f4wA7IB3kNAiW9Nh@cluster0.pekyxlp.mongodb.net/?retryWrites=true&w=majority')
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(4000, 'localhost', () => {
+      console.log('Server is running on localhost:4000');
+    });
+  })
+  .catch((error) => {
+    console.error('Failed to connect to MongoDB:', error);
+  });
+
 //
